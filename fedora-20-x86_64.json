@@ -1,0 +1,47 @@
+{
+    "builders": [{
+        "type": "virtualbox-iso",
+        "virtualbox_version_file": ".vbox_version",
+        "headless": false,
+
+        "guest_os_type": "Fedora20_64",
+        "disk_size": 40960,
+
+        "iso_url": "http://mirrors.kernel.org/fedora/releases/20/Live/x86_64/Fedora-Live-LXDE-x86_64-20-1.iso",
+        "iso_checksum": "b5002a697ef0e9e6fe10d0b88da6f7d43dbeb1b2c6dccb274b019123f321487d",
+        "iso_checksum_type": "sha256",
+
+        "boot_command": [
+            "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/fedora-20-x86_64/ks.cfg<enter><wait>"
+        ],
+        "boot_wait": "12s",
+
+        "http_directory": "http",
+        "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+        "ssh_port": 22,
+        "ssh_wait_timeout": "10000s",
+
+        "vboxmanage": [
+            ["modifyvm", "{{.Name}}", "--memory", "512"],
+            ["modifyvm", "{{.Name}}", "--cpus", "1"]
+        ],
+
+        "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p"
+    }],
+    "post-processors": [{
+        "output": "build/fedora-20-x86_64.box",
+        "type": "vagrant"
+    }],
+    "provisioners": [{
+        "type": "shell",
+        "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+        "scripts": [
+            "scripts/vagrant.sh",
+            "scripts/vboxguest.sh",
+            "scripts/compact.sh"
+        ]
+    }]
+}
