@@ -1,6 +1,7 @@
 packer-vagrant-fedora
 ========
 
+
 [Packer](http://packer.io) templates for Fedora Linux boxes.
 
 * Fedora 20 (Minimal) 64-bit
