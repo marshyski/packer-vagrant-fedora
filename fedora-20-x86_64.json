@@ -4,7 +4,7 @@
         "virtualbox_version_file": ".vbox_version",
         "headless": false,
 
-        "guest_os_type": "Fedora20_64",
+        "guest_os_type": "Fedora_64",
         "disk_size": 40960,
 
         "iso_url": "http://mirrors.kernel.org/fedora/releases/20/Live/x86_64/Fedora-Live-LXDE-x86_64-20-1.iso",
@@ -12,9 +12,9 @@
         "iso_checksum_type": "sha256",
 
         "boot_command": [
-            "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/fedora-20-x86_64/ks.cfg<enter><wait>"
+            "<tab> inst.text inst.sshd inst.repo=http://{{.HTTPIP}}:{{.HTTPPort}}/fedora-20-x86_64/ks.cfg<enter><enter><wait>"
         ],
-        "boot_wait": "12s",
+        "boot_wait": "10s",
 
         "http_directory": "http",
         "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
